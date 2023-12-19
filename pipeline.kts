@@ -1,27 +1,33 @@
-import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.v2023_11.*
+import jetbrains.buildServer.configs.kotlin.v2023_11.buildSteps.dockerCommand
+import jetbrains.buildServer.configs.kotlin.v2023_11.buildSteps.script
 
 version = "2023.11"
 
 project {
     buildType {
+        name = "Build"
         steps {
-            dockerCompose {
+            dockerCommand {
                 name = "Node contenerizado"
-                file = "docker-compose.yaml"
+                commandType = build {
+                    source = file {
+                        path = "docker-compose.yaml"
+                    }
+                }
             }
-        }
-        script {
-            name = "Test de dependencias"
-            scriptContent = "docker exec VS npm test"
-            executionMode = BuildStep.ExecutionMode.RUN_ON_FAILURE // Para ver la salida incluso si falla
-        }
-        script {
-            name "Detener contenedor"
-            scriptContent = "docker stop VS"
-        }
-        script {
-            name "Eliminar contenedor"
-            scriptContent = "docker rm VS"
+            script {
+                name = "Test de dependencias"
+                scriptContent = "docker exec VS npm test"
+            }
+            script {
+                name = "Detener contenedor"
+                scriptContent = "docker stop VS"
+            }
+            script {
+                name = "Eliminar contenedor"
+                scriptContent = "docker rm VS"
+            }
         }
     }
 }
