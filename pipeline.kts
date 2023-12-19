@@ -1,6 +1,4 @@
-import jetbrains.buildServer.configs.kotlin.v2023_11.*
-import jetbrains.buildServer.configs.kotlin.v2023_11.buildSteps.dockerCommand
-import jetbrains.buildServer.configs.kotlin.v2023_11.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.*
 
 version = "2023.11"
 
