@@ -7,13 +7,13 @@ project {
         steps {
             dockerCompose {
                 name = "Node contenerizado"
-                file = "docker-compose.yml"
+                file = "docker-compose.yaml"
             }
         }
         script {
-            name "Test de dependencias"
-            // El contenedor se llama VS
+            name = "Test de dependencias"
             scriptContent = "docker exec VS npm test"
+            executionMode = BuildStep.ExecutionMode.RUN_ON_FAILURE // Para ver la salida incluso si falla
         }
         script {
             name "Detener contenedor"
